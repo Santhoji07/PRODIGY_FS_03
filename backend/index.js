@@ -19,5 +19,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 
+const path = require('path');
+// Serve static files from assets
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

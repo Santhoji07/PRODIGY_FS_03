@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../App.css';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ function HomePage() {
         { productId },
         { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }
       );
-      setNotify("Added to cart!");
+      setNotify(<span style={{ background: "green", color: "white", padding: "4px 12px", borderRadius: "4px" }}>Added to cart!</span>);
       setTimeout(() => setNotify(""), 1000);
     } catch {}
   };
@@ -30,30 +31,23 @@ function HomePage() {
 
   return (
     <div>
-      <header style={{
-        background: "#333",
-        color: "#fff",
-        padding: 16,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}>
-        <div style={{ fontWeight: "bold", fontSize: 24 }}>Shopzy</div>
-        <div>
-          <button onClick={() => navigate("/cart")} style={{ marginRight: 10 }}>Cart</button>
+      <header className="shop-header">
+        <div className="shop-title">Shopzy</div>
+        <div className="shop-actions">
+          <button onClick={() => navigate("/cart")}>Cart</button>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </header>
       <div style={{ margin: 20 }}>
-        {notify && <div style={{ color: "green", marginBottom: 10 }}>{notify}</div>}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
+        {notify && <div className="notify">{notify}</div>}
+        <div className="products-grid">
           {products.map(p => (
-            <div key={p._id} style={{ border: "1px solid #ccc", borderRadius: 8, padding: 12, width: 200 }}>
-              <img src={p.image} alt={p.name} style={{ width: "100%", height: 100, objectFit: "cover" }} />
+            <div key={p._id} className="product-card">
+              <img src={p.image} alt={p.name} />
               <h3>{p.name}</h3>
               <p>{p.description}</p>
-              <p><b>₹{p.price}</b></p>
-              <button onClick={() => addToCart(p._id)} style={{ width: "100%" }}>
+              <div className="price">₹{p.price}</div>
+              <button onClick={() => addToCart(p._id)}>
                 Add to Cart
               </button>
             </div>

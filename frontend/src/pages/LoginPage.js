@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../App.css';
 
 function LoginPage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -42,6 +43,8 @@ function LoginPage() {
   };
 
   return (
+    <div className="login-bg">
+  <div className="glass-card">
     <div style={{ maxWidth: 300, margin: "100px auto", border: "1px solid #ccc", padding: 20, borderRadius: 10 }}>
       <h2>{isSignup ? "Sign Up" : "Login"}</h2>
       <form onSubmit={isSignup ? handleSignup : handleLogin}>
@@ -81,7 +84,7 @@ function LoginPage() {
       </form>
       {!isSignup && (
         <p>
-          No account?{" "}
+          Don't have a account?{" "}
           <button onClick={() => setIsSignup(true)} style={{ color: "blue", background: "none", border: "none" }}>
             Sign Up
           </button>
@@ -96,6 +99,8 @@ function LoginPage() {
         </p>
       )}
     </div>
+      </div>
+</div>
   );
 }
 

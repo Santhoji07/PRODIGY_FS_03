@@ -57,15 +57,28 @@ function CartPage() {
         alignItems: "center"
       }}>
         <div style={{ fontWeight: "bold", fontSize: 24 }}>Shopzy</div>
-        <button onClick={() => navigate("/home")} style={{ color: "#fff" }}>Back to Home</button>
+        <button
+          style={{
+            background: "#eee",
+            color: "#555",
+            border: "none",
+            borderRadius: 8,
+            padding: "10px 18px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          }}
+          onClick={() => navigate("/home")}
+        >
+          Back to Home
+        </button>
       </header>
-      <div style={{ maxWidth: 700, margin: "30px auto" }}>
+      <div className="cart-container">
         {notify && <div style={{ color: "green", marginBottom: 10 }}>{notify}</div>}
-        <h2>Your Cart</h2>
+        <h2 className="cart-title">Your Cart</h2>
         {cart.items.length === 0 ? (
           <p>No items in cart.</p>
         ) : (
-          <table width="100%" border="1" cellPadding="8" style={{ borderCollapse: "collapse" }}>
+          <table className="cart-table">
             <thead>
               <tr>
                 <th>Product</th>
@@ -79,31 +92,42 @@ function CartPage() {
               {cart.items.map(item => (
                 <tr key={item.productId._id}>
                   <td>
-                    <img src={item.productId.image} alt={item.productId.name} width="50" />
-                    <div>{item.productId.name}</div>
+                    <div className="cart-product-name">
+                      <img
+                        className="cart-product-img"
+                        src={item.productId.image}
+                        alt={item.productId.name}
+                      />
+                      {item.productId.name}
+                    </div>
                   </td>
                   <td>
                     <input
+                      className="cart-input"
                       type="number"
                       value={item.quantity}
                       min="1"
-                      style={{ width: 50 }}
                       onChange={e => updateQuantity(item.productId._id, Number(e.target.value))}
                     />
                   </td>
-                  <td>₹{item.productId.price}</td>
-                  <td>₹{item.productId.price * item.quantity}</td>
+                  <td className="cart-price">₹{item.productId.price}</td>
+                  <td className="cart-net">₹{item.productId.price * item.quantity}</td>
                   <td>
-                    <button onClick={() => removeFromCart(item.productId._id)}>Delete</button>
+                    <button
+                      className="cart-remove-btn"
+                      onClick={() => removeFromCart(item.productId._id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
-        <h3>Total: ₹{total}</h3>
+        <div className="cart-total">Total: ₹{total}</div>
         {cart.items.length > 0 && (
-          <button onClick={handlePurchase} style={{ marginTop: 10 }}>
+          <button className="cart-purchase-btn" onClick={handlePurchase}>
             Proceed to Purchase
           </button>
         )}
